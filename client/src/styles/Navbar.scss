@@ -1,0 +1,236 @@
+@import "./variables.scss";
+@import "./breakpoints.scss";
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 40px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+
+  @include sm {
+    padding: 12px 16px;
+  }
+
+  .navbar_logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+
+    img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ff385c, #fb7185);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      @include sm {
+        display: none;
+      }
+    }
+  }
+
+  .navbar_search {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 40px;
+    padding: 6px 6px 6px 20px;
+    width: 380px;
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #ff385c;
+      box-shadow: 0 0 15px rgba(255, 56, 92, 0.25);
+    }
+
+    @include md {
+      width: 240px;
+    }
+
+    @include sm {
+      display: none;
+    }
+
+    input {
+      border: none;
+      background: transparent;
+      outline: none;
+      color: #ffffff;
+      font-size: 14px;
+      width: 100%;
+
+      &::placeholder {
+        color: #94a3b8;
+      }
+    }
+
+    .search_icon_btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff385c, #e61e4d);
+      border: none;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+
+      &:hover:not(:disabled) {
+        transform: scale(1.08);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .navbar_right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .admin_btn_nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: rgba(255, 56, 92, 0.15);
+      border: 1px solid rgba(255, 56, 92, 0.3);
+      color: #ff385c;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #ff385c;
+        color: #ffffff;
+      }
+
+      @include sm {
+        display: none;
+      }
+    }
+
+    .host {
+      color: #f1f5f9;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    .account_wrapper {
+      position: relative;
+    }
+
+    .navbar_right_account {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px 6px 14px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      svg {
+        color: #cbd5e1 !important;
+      }
+
+      .user_avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .navbar_right_accountmenu {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 220px;
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      animation: menuFade 0.2s ease;
+
+      a {
+        padding: 10px 14px;
+        color: #cbd5e1;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 10px;
+        transition: background 0.2s;
+
+        &:hover {
+          background: rgba(255, 56, 92, 0.15);
+          color: #ff385c;
+        }
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 4px 0;
+      }
+    }
+  }
+}
+
+@keyframes menuFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

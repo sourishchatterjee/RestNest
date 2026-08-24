@@ -1,0 +1,672 @@
+/* AdminLogin.scss - RestNest Admin Portal Design System */
+
+// Theme Variables
+[data-theme="dark"],
+:root {
+  --admin-bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #0f172a 100%);
+  --admin-card-bg: rgba(17, 24, 39, 0.85);
+  --admin-card-border: rgba(255, 255, 255, 0.12);
+  --admin-card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(248, 57, 90, 0.15);
+  --admin-text-primary: #f9fafb;
+  --admin-text-secondary: #9ca3af;
+  --admin-text-muted: #6b7280;
+  --admin-input-bg: rgba(15, 23, 42, 0.85);
+  --admin-input-border: rgba(255, 255, 255, 0.15);
+  --admin-input-focus-border: #f8395a;
+  --admin-input-focus-glow: rgba(248, 57, 90, 0.25);
+  --admin-primary: #f8395a;
+  --admin-primary-hover: #e02847;
+  --admin-accent-glow: radial-gradient(circle at 50% 0%, rgba(248, 57, 90, 0.25), transparent 70%);
+  --admin-badge-bg: rgba(248, 57, 90, 0.15);
+  --admin-badge-text: #ff6b81;
+  --admin-badge-border: rgba(248, 57, 90, 0.3);
+  --admin-hero-bg: rgba(15, 23, 42, 0.7);
+  --admin-toggle-bg: rgba(30, 41, 59, 0.9);
+  --admin-toggle-border: rgba(255, 255, 255, 0.2);
+  --admin-pin-bg: rgba(15, 23, 42, 0.95);
+  --admin-pin-border: rgba(255, 255, 255, 0.2);
+  --admin-stat-bg: rgba(30, 41, 59, 0.6);
+  --admin-alert-error-bg: rgba(239, 68, 68, 0.15);
+  --admin-alert-error-border: rgba(239, 68, 68, 0.3);
+  --admin-alert-error-text: #fca5a5;
+  --admin-alert-success-bg: rgba(16, 185, 129, 0.15);
+  --admin-alert-success-border: rgba(16, 185, 129, 0.3);
+  --admin-alert-success-text: #6ee7b7;
+}
+
+[data-theme="light"] {
+  --admin-bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  --admin-card-bg: rgba(255, 255, 255, 0.95);
+  --admin-card-border: rgba(226, 232, 240, 0.9);
+  --admin-card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 30px rgba(248, 57, 90, 0.08);
+  --admin-text-primary: #0f172a;
+  --admin-text-secondary: #475569;
+  --admin-text-muted: #64748b;
+  --admin-input-bg: #ffffff;
+  --admin-input-border: #cbd5e1;
+  --admin-input-focus-border: #f8395a;
+  --admin-input-focus-glow: rgba(248, 57, 90, 0.18);
+  --admin-primary: #f8395a;
+  --admin-primary-hover: #e02847;
+  --admin-accent-glow: radial-gradient(circle at 50% 0%, rgba(248, 57, 90, 0.12), transparent 70%);
+  --admin-badge-bg: rgba(248, 57, 90, 0.1);
+  --admin-badge-text: #e11d48;
+  --admin-badge-border: rgba(248, 57, 90, 0.25);
+  --admin-hero-bg: rgba(241, 245, 249, 0.9);
+  --admin-toggle-bg: #ffffff;
+  --admin-toggle-border: #cbd5e1;
+  --admin-pin-bg: #ffffff;
+  --admin-pin-border: #cbd5e1;
+  --admin-stat-bg: rgba(241, 245, 249, 0.95);
+  --admin-alert-error-bg: #fef2f2;
+  --admin-alert-error-border: #fecaca;
+  --admin-alert-error-text: #dc2626;
+  --admin-alert-success-bg: #ecfdf5;
+  --admin-alert-success-border: #a7f3d0;
+  --admin-alert-success-text: #059669;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.admin-login-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--admin-bg-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", sans-serif;
+  transition: background 0.4s ease, color 0.4s ease;
+  padding: 5rem 1.5rem 3rem 1.5rem;
+
+  // Background animated ambient circles
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+
+    &.orb-1 {
+      width: 450px;
+      height: 450px;
+      background: rgba(248, 57, 90, 0.25);
+      top: -100px;
+      left: -100px;
+      animation: floatOrb 12s infinite alternate ease-in-out;
+    }
+
+    &.orb-2 {
+      width: 400px;
+      height: 400px;
+      background: rgba(36, 53, 90, 0.35);
+      bottom: -100px;
+      right: -100px;
+      animation: floatOrb 15s infinite alternate-reverse ease-in-out;
+    }
+  }
+
+  // Top Bar (Nav Back & Theme Switch)
+  .admin-login-topbar {
+    position: absolute;
+    top: 1.5rem;
+    left: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--admin-text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      background: var(--admin-toggle-bg);
+      border: 1px solid var(--admin-toggle-border);
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: var(--admin-text-primary);
+        border-color: var(--admin-primary);
+        transform: translateX(-3px);
+      }
+    }
+
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--admin-toggle-bg);
+      border: 1px solid var(--admin-toggle-border);
+      padding: 0.55rem 1.1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: var(--admin-text-primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+
+      .icon-sun {
+        color: #f59e0b;
+      }
+      .icon-moon {
+        color: #a855f7;
+      }
+
+      &:hover {
+        border-color: var(--admin-primary);
+        transform: scale(1.04);
+      }
+    }
+  }
+
+  // Container Card
+  .admin-login-card {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    width: 100%;
+    max-width: 1000px;
+    background: var(--admin-card-bg);
+    border: 1px solid var(--admin-card-border);
+    box-shadow: var(--admin-card-shadow);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+
+    @media (max-width: 850px) {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+    }
+  }
+
+  // Left Hero Side
+  .admin-hero-section {
+    position: relative;
+    background: var(--admin-hero-bg);
+    padding: 2.75rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--admin-card-border);
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--admin-accent-glow);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      .admin-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.75rem;
+
+        .brand-logo-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+          background: linear-gradient(135deg, #f8395a, #24355a);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          box-shadow: 0 8px 20px rgba(248, 57, 90, 0.4);
+        }
+
+        .brand-title {
+          h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--admin-text-primary);
+            margin: 0;
+            letter-spacing: -0.5px;
+          }
+          span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--admin-primary);
+          }
+        }
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.9rem;
+        background: var(--admin-badge-bg);
+        border: 1px solid var(--admin-badge-border);
+        color: var(--admin-badge-text);
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+
+        .pulse-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #10b981;
+          box-shadow: 0 0 10px #10b981;
+          animation: pulseGreen 2s infinite;
+        }
+      }
+
+      .hero-heading {
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1.25;
+        color: var(--admin-text-primary);
+        margin-bottom: 0.85rem;
+
+        span {
+          background: linear-gradient(135deg, #f8395a 0%, #ff758c 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      .hero-subtext {
+        font-size: 0.9rem;
+        color: var(--admin-text-secondary);
+        line-height: 1.55;
+        margin: 0;
+      }
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 2rem 0;
+
+      .stat-mini-card {
+        background: var(--admin-stat-bg);
+        border: 1px solid var(--admin-card-border);
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        .stat-value {
+          font-size: 1.15rem;
+          font-weight: 700;
+          color: var(--admin-text-primary);
+          margin-bottom: 0.2rem;
+        }
+        .stat-label {
+          font-size: 0.725rem;
+          color: var(--admin-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+
+    .hero-footer-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--admin-card-border);
+      padding-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--admin-text-muted);
+
+      .security-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--admin-text-secondary);
+      }
+    }
+  }
+
+  // Right Form Side
+  .admin-form-section {
+    padding: 2.75rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+
+    @media (max-width: 600px) {
+      padding: 2rem 1.25rem;
+    }
+
+    .form-header {
+      margin-bottom: 1.75rem;
+
+      h2 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--admin-text-primary);
+        margin: 0 0 0.35rem 0;
+      }
+      p {
+        font-size: 0.875rem;
+        color: var(--admin-text-secondary);
+        margin: 0;
+      }
+    }
+
+    // Alerts
+    .alert-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      animation: fadeIn 0.3s ease;
+
+      &.error {
+        background: var(--admin-alert-error-bg);
+        border: 1px solid var(--admin-alert-error-border);
+        color: var(--admin-alert-error-text);
+      }
+
+      &.success {
+        background: var(--admin-alert-success-bg);
+        border: 1px solid var(--admin-alert-success-border);
+        color: var(--admin-alert-success-text);
+      }
+    }
+
+    // Form inputs
+    .admin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      width: 100%;
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        width: 100%;
+
+        label {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--admin-text-primary);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .input-field-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 100%;
+
+          .leading-icon {
+            position: absolute;
+            left: 1rem;
+            color: var(--admin-text-muted);
+            pointer-events: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+          }
+
+          input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            background: var(--admin-input-bg);
+            border: 1px solid var(--admin-input-border);
+            border-radius: 14px;
+            color: var(--admin-text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+
+            &::placeholder {
+              color: var(--admin-text-muted);
+            }
+
+            &:focus {
+              border-color: var(--admin-input-focus-border);
+              box-shadow: 0 0 0 4px var(--admin-input-focus-glow);
+
+              ~ .leading-icon {
+                color: var(--admin-primary);
+              }
+            }
+          }
+
+          .trailing-btn {
+            position: absolute;
+            right: 0.75rem;
+            background: transparent;
+            border: none;
+            color: var(--admin-text-muted);
+            cursor: pointer;
+            padding: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: color 0.2s ease;
+
+            &:hover {
+              color: var(--admin-text-primary);
+            }
+          }
+        }
+      }
+
+      // PIN Input Row
+      .pin-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        width: 100%;
+
+        label {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--admin-text-primary);
+        }
+
+        .pin-boxes {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.5rem;
+          width: 100%;
+
+          input {
+            width: 100%;
+            min-width: 0;
+            height: 46px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--admin-pin-bg);
+            border: 1px solid var(--admin-pin-border);
+            border-radius: 12px;
+            color: var(--admin-text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+
+            &:focus {
+              border-color: var(--admin-primary);
+              box-shadow: 0 0 0 3px var(--admin-input-focus-glow);
+            }
+          }
+        }
+      }
+
+      // Options Row (Remember & Forgot)
+      .form-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        width: 100%;
+
+        .remember-me {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--admin-text-secondary);
+          cursor: pointer;
+          font-size: 0.85rem;
+
+          input[type="checkbox"] {
+            accent-color: var(--admin-primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+          }
+        }
+
+        .forgot-link {
+          color: #f8395a !important;
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 0.85rem;
+          white-space: nowrap;
+          transition: opacity 0.2s ease;
+
+          &:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      // Submit Button
+      .btn-submit-admin {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, #f8395a 0%, #d92645 100%);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        box-shadow: 0 8px 24px rgba(248, 57, 90, 0.35);
+        transition: all 0.3s ease;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(248, 57, 90, 0.45);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        .spinner {
+          width: 20px;
+          height: 20px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-top-color: white;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+      }
+
+      // Quick Demo Login Button
+      .btn-demo-fill {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--admin-stat-bg);
+        border: 1px dashed var(--admin-card-border);
+        color: var(--admin-text-secondary);
+        border-radius: 14px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: var(--admin-text-primary);
+          border-color: var(--admin-primary);
+          background: var(--admin-badge-bg);
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes floatOrb {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(60px, 40px) scale(1.15);
+  }
+}
+
+@keyframes pulseGreen {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
