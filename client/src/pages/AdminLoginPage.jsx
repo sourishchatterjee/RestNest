@@ -152,7 +152,7 @@ const AdminLoginPage = () => {
         <Link to="/" className="back-home-link">
           <ArrowBack fontSize="small" /> Back to RestNest Home
         </Link>
-        {/* <button
+        <button
           className="theme-toggle-btn"
           onClick={toggleTheme}
           type="button"
@@ -167,7 +167,7 @@ const AdminLoginPage = () => {
               <DarkMode className="icon-moon" fontSize="small" /> Dark Mode
             </>
           )}
-        </button> */}
+        </button>
       </header>
 
       {/* Main Glass Card */}

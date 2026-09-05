@@ -225,9 +225,9 @@ router.patch("/users/:id/role", async (req, res) => {
 router.delete("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await User.findByIdAndDelete(id).catch(() => {});
-    await Listing.deleteMany({ creator: id }).catch(() => {});
-    await Booking.deleteMany({ $or: [{ customerId: id }, { hostId: id }] }).catch(() => {});
+    await User.findByIdAndDelete(id).catch(() => { });
+    await Listing.deleteMany({ creator: id }).catch(() => { });
+    await Booking.deleteMany({ $or: [{ customerId: id }, { hostId: id }] }).catch(() => { });
     res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
     res.status(200).json({ message: "User deleted" });
@@ -251,8 +251,8 @@ router.get("/listings", async (req, res) => {
 router.delete("/listings/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await Listing.findByIdAndDelete(id).catch(() => {});
-    await Booking.deleteMany({ listingId: id }).catch(() => {});
+    await Listing.findByIdAndDelete(id).catch(() => { });
+    await Booking.deleteMany({ listingId: id }).catch(() => { });
     res.status(200).json({ message: "Listing deleted successfully" });
   } catch (err) {
     res.status(200).json({ message: "Listing deleted" });
