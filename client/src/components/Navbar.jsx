@@ -6,6 +6,7 @@ import "../styles/Navbar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../redux/state";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 function Navbar({ theme, toggleTheme }) {
   const [dropdownMenu, setDropdownMenu] = useState(false);
@@ -89,7 +90,7 @@ function Navbar({ theme, toggleTheme }) {
               <img
                 src={
                   user?.profileImagePath
-                    ? `http://localhost:3001/${user.profileImagePath.replace("public", "")}`
+                    ? `${API_URL}/${user.profileImagePath.replace("public", "").replace(/^\/+/, "")}`
                     : "/assets/denny.jpeg"
                 }
                 alt="profile"

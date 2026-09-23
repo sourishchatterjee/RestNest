@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../redux/state";
 import "../styles/AdminLogin.scss";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 import {
   AdminPanelSettings,
   Lock,
@@ -91,7 +92,7 @@ const AdminLoginPage = () => {
     const pin = pinDigits.join("");
 
     try {
-      const res = await fetch("http://localhost:3001/admin/login", {
+      const res = await fetch(`${API_URL}/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, pin }),

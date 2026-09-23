@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setReservationList } from "../redux/state";
 import ListingCard from "../components/ListingCard";
 import Footer from "../components/Footer";
+import { API_URL } from "../apiConfig";
 
 const ReservationList = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ const ReservationList = () => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${userId}/reservations`,
+        `${API_URL}/users/${userId}/reservations`,
         {
           method: "GET",
         }

@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ function RegisterPage() {
         registerForm.append(key, formData[key]);
       }
 
-      const response = await fetch("http://localhost:3001/auth/register", {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         body: registerForm,
       });

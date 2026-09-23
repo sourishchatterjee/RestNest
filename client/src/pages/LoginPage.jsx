@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ function LoginPage() {
     const toastId = toast.loading("Logging in...");
 
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

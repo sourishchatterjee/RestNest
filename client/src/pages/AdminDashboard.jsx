@@ -5,6 +5,7 @@ import { setLogout } from "../redux/state";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
+import { API_URL } from "../apiConfig";
 import "../styles/AdminDashboard.scss";
 import {
   Dashboard,
@@ -54,7 +55,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost:3001/admin/stats");
+      const res = await fetch(`${API_URL}/admin/stats`);
       const data = await res.json();
       setStats(data);
     } catch (err) {
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:3001/admin/users");
+      const res = await fetch(`${API_URL}/admin/users`);
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -74,7 +75,7 @@ const AdminDashboard = () => {
 
   const fetchListings = async () => {
     try {
-      const res = await fetch("http://localhost:3001/admin/listings");
+      const res = await fetch(`${API_URL}/admin/listings`);
       const data = await res.json();
       setListings(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -84,7 +85,7 @@ const AdminDashboard = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("http://localhost:3001/admin/bookings");
+      const res = await fetch(`${API_URL}/admin/bookings`);
       const data = await res.json();
       setBookings(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -112,7 +113,7 @@ const AdminDashboard = () => {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:3001/admin/users/${userId}`, { method: "DELETE" });
+      const res = await fetch(`${API_URL}/admin/users/${userId}`, { method: "DELETE" });
       if (res.ok) {
         showNotice(`User "${name}" deleted successfully.`);
         loadAllData();
@@ -124,7 +125,7 @@ const AdminDashboard = () => {
 
   const handleToggleAdmin = async (userId, name) => {
     try {
-      const res = await fetch(`http://localhost:3001/admin/users/${userId}/role`, { method: "PATCH" });
+      const res = await fetch(`${API_URL}/admin/users/${userId}/role`, { method: "PATCH" });
       if (res.ok) {
         showNotice(`Updated admin status for "${name}".`);
         loadAllData();
@@ -139,7 +140,7 @@ const AdminDashboard = () => {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:3001/admin/listings/${listingId}`, { method: "DELETE" });
+      const res = await fetch(`${API_URL}/admin/listings/${listingId}`, { method: "DELETE" });
       if (res.ok) {
         showNotice(`Listing "${title}" deleted.`);
         loadAllData();
@@ -422,7 +423,7 @@ const AdminDashboard = () => {
                                 <img
                                   src={
                                     l.listingPhotoPaths?.[0]
-                                      ? `http://localhost:3001/${l.listingPhotoPaths[0].replace("public", "")}`
+                                      ? `${API_URL}/${l.listingPhotoPaths[0]?.replace("public", "")?.replace(/^[/\\]+/, "")}`
                                       : "assets/slide.jpg"
                                   }
                                   alt={l.title}
@@ -496,7 +497,7 @@ const AdminDashboard = () => {
                                 <img
                                   src={
                                     u.profileImagePath
-                                      ? `http://localhost:3001/${u.profileImagePath.replace("public", "")}`
+                                      ? `${API_URL}/${u.profileImagePath?.replace("public", "")?.replace(/^[/\\]+/, "")}`
                                       : "assets/logo.png"
                                   }
                                   alt="avatar"

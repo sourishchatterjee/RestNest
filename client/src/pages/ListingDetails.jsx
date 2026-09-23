@@ -11,6 +11,7 @@ import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ const ListingDetails = () => {
   const getListingDetails = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties/${listingId}`,
+        `${API_URL}/properties/${listingId}`,
         {
           method: "GET",
         }
@@ -89,7 +90,7 @@ const ListingDetails = () => {
         totalPrice: listing.price * dayCount,
       };
 
-      const response = await fetch("http://localhost:3001/bookings/create", {
+      const response = await fetch(`${API_URL}/bookings/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +127,7 @@ const ListingDetails = () => {
           {listing.listingPhotoPaths?.map((item, index) => (
             <img
               key={index}
-              src={item.startsWith("http") ? item : `http://localhost:3001/${item.replace("public", "")}`}
+              src={item.startsWith("http") ? item : `${API_URL}/${item.replace("public", "").replace(/^\/+/, "")}`}
               alt="listing photo"
               onError={(e) => {
                 e.target.onerror = null;
@@ -150,7 +151,7 @@ const ListingDetails = () => {
           <img
             src={
               listing.creator?.profileImagePath
-                ? `http://localhost:3001/${listing.creator.profileImagePath.replace("public", "")}`
+                ? `${API_URL}/${listing.creator.profileImagePath.replace("public", "").replace(/^\/+/, "")}`
                 : "/assets/denny.jpeg"
             }
             alt="creator profile"

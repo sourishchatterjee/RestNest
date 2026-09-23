@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setWishList } from "../redux/state";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 const ListingCard = ({
   listingId,
@@ -64,7 +65,7 @@ const ListingCard = ({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${user?._id}/${listingId}`,
+        `${API_URL}/users/${user?._id}/${listingId}`,
         {
           method: "PATCH",
           headers: {
@@ -88,9 +89,9 @@ const ListingCard = ({
   };
 
   const getImageUrl = (photo) => {
-    if (!photo) return "assets/slide.jpg";
+    if (!photo) return "/assets/slide.jpg";
     if (photo.startsWith("http")) return photo;
-    return `http://localhost:3001/${photo.replace("public", "")}`;
+    return `${API_URL}/${photo.replace("public", "").replace(/^\/+/, "")}`;
   };
 
   return (

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
+import { API_URL } from "../apiConfig";
 
 
 const CreateListing = () => {
@@ -174,7 +175,7 @@ const CreateListing = () => {
       });
 
       /* Send a POST request to server */
-      const response = await fetch("http://localhost:3001/properties/create", {
+      const response = await fetch(`${API_URL}/properties/create`, {
         method: "POST",
         body: listingForm,
       });
