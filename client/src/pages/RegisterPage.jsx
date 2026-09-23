@@ -1,249 +1,9 @@
-// import React, { useState } from 'react'
-// import "../styles/Register.scss";
-
-
-
-// function RegisterPage() {
-// const [formData, setFormData]=useState({
-//   firstName:"",
-//   lastName: "",
-//   email:"",
-//   password:"",
-//   confirmPassword:"",
-//   profileImage: null,
-// })
-// const handleChange=(e)=>{
-//   const {name,value,files} =e.target;
-//   setFormData({
-//     ...formData,
-//     [name]:value,
-//     [name]:name === "profileImage" ? files[0] :value
-//   })
-// }
-
-// console.log(formData)
-
-//   return (
-//     <div className='register'>
-//       <div className='register_content'>
-//         <form className='register_content_form'>
-//           <input
-//           placeholder='First Name'
-//           name='firstName'
-//           value={formData.firstName}
-//           onChange={handleChange}
-//           required
-//           />
-
-//           <input
-//           placeholder='Last Name'
-//           name='lastName'
-//           value={formData.lastName}
-//           onChange={handleChange}
-//           required
-//           />
-
-//           <input
-//           placeholder='email'
-//           name='email'
-//           type='email'
-//           value={formData.email}
-//           onChange={handleChange}
-//           required
-//           />
-
-//           <input
-//           placeholder='Password'
-//           name='password'
-//           type='password'
-//           value={formData.password}
-//           onChange={handleChange}
-//           required
-//           />
-
-//           <input
-//           placeholder='Confirm Password'
-//           name='confirmPassword'
-//           type='password'
-//           value={formData.confirmPassword}
-//           onChange={handleChange}
-//           required
-//           />
-//           <input 
-//           id='image'
-//           type='file'
-//           name="profileImage" 
-//           accept='image/' 
-//           value={formData.profileImage}
-//           onChange={handleChange}
-//           required 
-//           style={{display: "none"}}
-//           />
-//           <label htmlFor='image'>
-//             <img  src='/assets/addImage.png' alt='add profile photo'/>
-//             <p>Uplode Your Photo</p>
-//           </label>
-          
-//           {formData.profileImage && (
-//             <img
-//               src={URL.createObjectURL(formData.profileImage)}
-//               alt="profile photo"
-//               style={{ maxWidth: "80px" }}
-//             />
-//           )}
-
-//           <button type='submit'>REGISTER</button>
-//         </form>
-//         <a href='/login'>Already have an account?Log In here</a>
-
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default RegisterPage
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import "../styles/Register.scss";
-// import {useNavigate} from "react-router-dom"
-
-// function RegisterPage() {
-//   const [formData, setFormData] = useState({
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     password: "",
-//     confirmPassword: "",
-//     profileImage: null,
-//   });
-
-//   const navigate =useNavigate()
-
-//   const handleChange = (e) => {
-//     const { name, value, files } = e.target; 
-//     setFormData({
-//       ...formData,
-//       [name]:value,
-//       [name]: name === "profileImage" ? files[0] : value, 
-//     });
-//   };
-
-//   console.log(formData);
-
-//   const [passwordMatch, setpasswordMatch] = useState(true)
-
-//   useEffect(()=>{
-//     setpasswordMatch(formData.password === formData.confirmPassword || formData.confirmPassword ==="")
-//   })
-
-//   const handleSubmit =async (e)=>{
-//     e.preventDefault()
-
-    
-
-//     try {
-//       const register_form = new FormData()
-//       for(var key in formData){
-//         register_form.append(key, formData[key])
-//       }
-
-//       const response =awit fetch("http://localhost:3001/auth/register",{
-//         method:"POST",
-//         body: register_form
-//       })
-
-//       if(response.ok){
-//         navigate("/login")
-//       }
-//     } catch (err){
-//       console.log("Registeration", err.message)
-//     }
-//   }
-
-//   return (
-//     <div className='register'>
-//       <div className='register_content'>
-//         <form className='register_content_form' onSubmit={handleSubmit}>
-//           <input
-//             placeholder='First Name'
-//             name='firstName'
-//             value={formData.firstName}
-//             onChange={handleChange}
-//             required
-//           />
-//           <input
-//             placeholder='Last Name'
-//             name='lastName'
-//             value={formData.lastName}
-//             onChange={handleChange}
-//             required
-//           />
-//           <input
-//             placeholder='email'
-//             name='email'
-//             type='email'
-//             value={formData.email}
-//             onChange={handleChange}
-//             required
-//           />
-//           <input
-//             placeholder='Password'
-//             name='password'
-//             type='password'
-//             value={formData.password}
-//             onChange={handleChange}
-//             required
-//           />
-//           <input
-//             placeholder='Confirm Password'
-//             name='confirmPassword'
-//             type='password'
-//             value={formData.confirmPassword}
-//             onChange={handleChange}
-//             required
-//           />
-//             {!passwordMatch &&(
-//               <p style={{color:"red"}}>Passwords are not matched!</p>
-//             )}
-//           <input
-//             id='image'
-//             type='file'
-//             name='profileImage'
-//             accept='image/*' 
-//             onChange={handleChange}
-//             required
-//             style={{ display: "none" }}
-//           />
-//           <label htmlFor='image'>
-//             <img src='/assets/addImage.png' alt='add profile photo' />
-//             <p>Upload Your Photo</p>
-//           </label>
-
-//           {formData.profileImage && (
-//             <img
-//               src={URL.createObjectURL(formData.profileImage)}
-//               alt='profile photo'
-//               style={{ maxWidth: "80px" }}
-//             />
-//           )}
-
-//           <button type='submit' disabled={!passwordMatch}>REGISTER</button>
-//         </form>
-//         <a href='/login'>Already have an account? Log In here</a>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default RegisterPage;
-
-
-
 import React, { useEffect, useState } from 'react';
 import "../styles/Register.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import toast from "react-hot-toast";
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -255,13 +15,14 @@ function RegisterPage() {
     profileImage: null,
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target; 
+    const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "profileImage" ? files[0] : value, 
+      [name]: name === "profileImage" ? files[0] : value,
     });
   };
 
@@ -273,7 +34,40 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (!formData.firstName.trim()) {
+      toast.error("Please enter your first name.");
+      return;
+    }
+
+    if (!formData.lastName.trim()) {
+      toast.error("Please enter your last name.");
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    if (!formData.password || formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    if (!formData.profileImage) {
+      toast.error("Please upload a profile photo.");
+      return;
+    }
+
+    setLoading(true);
+    const toastId = toast.loading("Creating your account...");
+
     try {
       const registerForm = new FormData();
       for (let key in formData) {
@@ -286,87 +80,98 @@ function RegisterPage() {
       });
 
       if (response.ok) {
+        toast.success("Account created successfully! Please log in. 🎉", { id: toastId });
         navigate("/login");
       } else {
-        console.error("Registration failed");
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData.message || "Registration failed. Email may already be in use.", { id: toastId });
       }
     } catch (err) {
       console.error("Registration error:", err.message);
+      toast.error("Registration error. Please check your connection.", { id: toastId });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className='register'>
-      <div className='register_content'>
-        <form className='register_content_form' onSubmit={handleSubmit}>
-          <input
-            placeholder='First Name'
-            name='firstName'
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            placeholder='Last Name'
-            name='lastName'
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            placeholder='Email'
-            name='email'
-            type='email'
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            placeholder='Password'
-            name='password'
-            type='password'
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            placeholder='Confirm Password'
-            name='confirmPassword'
-            type='password'
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-          {!passwordMatch && (
-            <p style={{ color: "red" }}>Passwords do not match!</p>
-          )}
-          <input
-            id='image'
-            type='file'
-            name='profileImage'
-            accept='image/*'
-            onChange={handleChange}
-            required
-            style={{ display: "none" }}
-          />
-          <label htmlFor='image'>
-            <img src='/assets/addImage.png' alt='Add profile photo' />
-            <p>Upload Your Photo</p>
-          </label>
-
-          {formData.profileImage && (
-            <img
-              src={URL.createObjectURL(formData.profileImage)}
-              alt='Profile preview'
-              style={{ maxWidth: "80px" }}
+    <>
+      <Navbar />
+      <div className='register'>
+        <div className='register_content'>
+          <form className='register_content_form' onSubmit={handleSubmit}>
+            <input
+              placeholder='First Name'
+              name='firstName'
+              value={formData.firstName}
+              onChange={handleChange}
+              required
             />
-          )}
+            <input
+              placeholder='Last Name'
+              name='lastName'
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+            <input
+              placeholder='Email'
+              name='email'
+              type='email'
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <input
+              placeholder='Password (min 6 characters)'
+              name='password'
+              type='password'
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <input
+              placeholder='Confirm Password'
+              name='confirmPassword'
+              type='password'
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            {!passwordMatch && (
+              <p style={{ color: "#ef4444", fontSize: "13px" }}>Passwords do not match!</p>
+            )}
+            <input
+              id='image'
+              type='file'
+              name='profileImage'
+              accept='image/*'
+              onChange={handleChange}
+              required
+              style={{ display: "none" }}
+            />
+            <label htmlFor='image'>
+              <img src='/assets/addImage.png' alt='Add profile photo' />
+              <p>{formData.profileImage ? "Change Profile Photo" : "Upload Your Photo"}</p>
+            </label>
 
-          <button type='submit' disabled={!passwordMatch}>REGISTER</button>
-        </form>
-        <a href='/login'>Already have an account? Log In here</a>
+            {formData.profileImage && (
+              <img
+                src={URL.createObjectURL(formData.profileImage)}
+                alt='Profile preview'
+                style={{ maxWidth: "80px", maxHeight: "80px", borderRadius: "50%", objectFit: "cover" }}
+              />
+            )}
+
+            <button type='submit' disabled={!passwordMatch || loading}>
+              {loading ? "CREATING ACCOUNT..." : "REGISTER"}
+            </button>
+          </form>
+          <Link to='/login'>Already have an account? Log In here</Link>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

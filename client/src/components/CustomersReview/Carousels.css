@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .review-card:hover {
@@ -43,6 +43,7 @@
   color: #cbd5e1;
   font-style: italic;
   margin: 0 0 24px;
+  transition: color 0.3s ease;
 }
 
 .review-footer {
@@ -69,12 +70,14 @@
   font-weight: 700;
   color: #ffffff;
   margin: 0 0 2px;
+  transition: color 0.3s ease;
 }
 
 .reviewer-location {
   font-size: 13px;
   color: #94a3b8;
   margin-bottom: 4px;
+  transition: color 0.3s ease;
 }
 
 .star-rating {
@@ -85,4 +88,43 @@
 .star-icon {
   font-size: 16px !important;
   color: #f59e0b;
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] .reviews-section .section-header h2,
+.home-page.light-mode .reviews-section .section-header h2 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .reviews-section .section-header p,
+.home-page.light-mode .reviews-section .section-header p {
+  color: #64748b;
+}
+
+[data-theme="light"] .review-card,
+.home-page.light-mode .review-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .review-card:hover,
+.home-page.light-mode .review-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: rgba(255, 56, 92, 0.5);
+}
+
+[data-theme="light"] .review-text,
+.home-page.light-mode .review-text {
+  color: #334155;
+}
+
+[data-theme="light"] .reviewer-name,
+.home-page.light-mode .reviewer-name {
+  color: #0f172a;
+}
+
+[data-theme="light"] .reviewer-location,
+.home-page.light-mode .reviewer-location {
+  color: #64748b;
 }

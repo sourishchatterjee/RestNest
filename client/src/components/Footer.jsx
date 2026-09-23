@@ -95,9 +95,9 @@ function Footer() {
         <div className="footer-bottom-bar">
           <p>© 2026 RestNest Inc. All rights reserved.</p>
           <div className="footer-bottom-links">
-            <Link to="/admin" className="admin-footer-btn">
+            {/* <Link to="/admin" className="admin-footer-btn">
               <AdminPanelSettings fontSize="small" /> Admin Suite
-            </Link>
+            </Link> */}
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
           </div>

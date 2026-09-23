@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../redux/state";
 import "../styles/AdminLogin.scss";
+import toast from "react-hot-toast";
 import {
   AdminPanelSettings,
   Lock,
@@ -82,6 +83,7 @@ const AdminLoginPage = () => {
 
     if (!email || !password) {
       setErrorMsg("Please enter both email and password.");
+      toast.error("Please enter both email and password.");
       return;
     }
 
@@ -99,6 +101,7 @@ const AdminLoginPage = () => {
 
       if (res.ok && data.token) {
         setSuccessMsg("Access Granted. Redirecting to Command Center...");
+        toast.success("Administrator Authenticated! 🎉");
         dispatch(
           setLogin({
             user: data.user,
@@ -108,17 +111,22 @@ const AdminLoginPage = () => {
 
         setTimeout(() => {
           navigate("/admin");
-        }, 1000);
+        }, 800);
       } else {
-        setErrorMsg(data.message || "Invalid administrator credentials.");
+        const msg = data.message || "Invalid administrator credentials.";
+        setErrorMsg(msg);
+        toast.error(msg);
       }
     } catch (err) {
       console.warn("Backend auth offline, checking fallback admin credentials...", err);
       const isAdminEmail = email.toLowerCase().includes("admin") || email.toLowerCase() === "sourish@restnest.com";
       if (!isAdminEmail && password !== "admin123") {
-        setErrorMsg("Access Denied: Credentials do not match an Administrator account.");
+        const msg = "Access Denied: Credentials do not match an Administrator account.";
+        setErrorMsg(msg);
+        toast.error(msg);
       } else {
         setSuccessMsg("Demo Session Authenticated. Redirecting...");
+        toast.success("Demo Admin Session Authenticated! 🎉");
         dispatch(
           setLogin({
             user: {
@@ -134,7 +142,7 @@ const AdminLoginPage = () => {
         );
         setTimeout(() => {
           navigate("/admin");
-        }, 1000);
+        }, 800);
       }
     } finally {
       setLoading(false);

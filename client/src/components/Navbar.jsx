@@ -1,12 +1,13 @@
-import { Search, Person, Menu, AdminPanelSettings } from "@mui/icons-material";
-import variables from "../styles/variables.scss";
+import { Search, Person, Menu, AdminPanelSettings, LightMode, DarkMode } from "@mui/icons-material";
+import variables from "../styles/variables.js";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../styles/Navbar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../redux/state";
+import toast from "react-hot-toast";
 
-function Navbar() {
+function Navbar({ theme, toggleTheme }) {
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -16,7 +17,9 @@ function Navbar() {
 
   const handleSearch = () => {
     if (search.trim() !== "") {
-      navigate(`/properties/search/${search}`);
+      navigate(`/properties/search/${search.trim()}`);
+    } else {
+      toast.error("Please enter a destination to search.");
     }
   };
 
@@ -52,10 +55,25 @@ function Navbar() {
       </div>
 
       <div className="navbar_right">
-        <Link to="/admin" className="admin_btn_nav" title="Admin Dashboard">
-          <AdminPanelSettings fontSize="small" />
-          <span>Admin Panel</span>
-        </Link>
+        {toggleTheme && (
+          <button
+            className={`theme_toggle_btn ${theme === "light" ? "light" : "dark"}`}
+            onClick={toggleTheme}
+            title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
+          >
+            {theme === "dark" ? (
+              <>
+                <LightMode fontSize="small" className="theme_icon sun" />
+                <span className="theme_label">Light</span>
+              </>
+            ) : (
+              <>
+                <DarkMode fontSize="small" className="theme_icon moon" />
+                <span className="theme_label">Dark</span>
+              </>
+            )}
+          </button>
+        )}
 
         <Link to={user ? "/create-listing" : "/login"} className="host">
           Become A Host
@@ -69,9 +87,17 @@ function Navbar() {
             <Menu sx={{ color: variables.darkgrey }} />
             {user ? (
               <img
-                src={`http://localhost:3001/${user.profileImagePath.replace("public", "")}`}
+                src={
+                  user?.profileImagePath
+                    ? `http://localhost:3001/${user.profileImagePath.replace("public", "")}`
+                    : "/assets/denny.jpeg"
+                }
                 alt="profile"
                 className="user_avatar"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/assets/denny.jpeg";
+                }}
               />
             ) : (
               <Person sx={{ color: variables.darkgrey }} />
@@ -102,6 +128,7 @@ function Navbar() {
                     onClick={() => {
                       dispatch(setLogout());
                       setDropdownMenu(false);
+                      toast.success("Logged out successfully.");
                     }}
                   >
                     Log Out

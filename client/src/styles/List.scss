@@ -1,28 +1,53 @@
 @import "./breakpoints.scss";
 @import "./variables.scss";
 
-
 .title-list {
-  margin: 40px 100px;
-  color: $blue;
+  margin: 40px 100px 20px;
+  color: #f8fafc;
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: capitalize;
 
   @include sm {
-    margin: 40px 50px;
+    margin: 30px 20px 15px;
+    font-size: 24px;
   }
 }
 
 .list {
-  padding: 0 100px 120px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
+  padding: 20px 100px 120px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+  min-height: 50vh;
 
   @include xl {
-    padding: 0 20px 120px;
+    padding: 20px 40px 120px;
+  }
+
+  @include sm {
+    padding: 15px 16px 80px;
+    grid-template-columns: 1fr;
   }
 }
 
+.trip-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
+  .remove-button {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
 
-
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

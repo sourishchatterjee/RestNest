@@ -1,0 +1,115 @@
+@import "./variables.scss";
+@import "./breakpoints.scss";
+
+.home-page {
+  min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease;
+
+  &.dark-mode,
+  &[data-theme="dark"] {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+
+  &.light-mode,
+  &[data-theme="light"] {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+}
+
+/* Floating Quick Theme Switcher Button */
+.floating_theme_switch {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 10px;
+  border-radius: 40px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 16px 40px rgba(255, 56, 92, 0.3);
+    border-color: rgba(255, 56, 92, 0.5);
+  }
+
+  .switch_track {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .switch_thumb {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &.thumb-dark {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      .switch_icon {
+        color: #60a5fa;
+        font-size: 18px;
+      }
+    }
+
+    &.thumb-light {
+      background: linear-gradient(135deg, #fef08a, #f59e0b);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      .switch_icon.sun {
+        color: #78350f;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .floating_text {
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  @include sm {
+    bottom: 20px;
+    right: 20px;
+    padding: 8px;
+    .floating_text {
+      display: none;
+    }
+  }
+}
+
+/* Light mode adjustments for floating button */
+.home-page.light-mode .floating_theme_switch,
+[data-theme="light"] .floating_theme_switch {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    border-color: #ff385c;
+    box-shadow: 0 14px 35px rgba(255, 56, 92, 0.2);
+  }
+}

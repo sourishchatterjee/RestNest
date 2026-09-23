@@ -11,6 +11,7 @@
   padding: 80px 20px;
   color: #ffffff;
   overflow: hidden;
+  transition: color 0.3s ease;
 
   @include sm {
     min-height: 500px;
@@ -25,6 +26,7 @@
     bottom: 0;
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.9) 100%);
     backdrop-filter: blur(4px);
+    transition: background 0.3s ease;
   }
 
   .hero-content {
@@ -105,7 +107,7 @@
     align-items: center;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     margin-bottom: 35px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 
     &:hover {
       border-color: rgba(255, 56, 92, 0.5);
@@ -219,11 +221,68 @@
       font-size: 13px;
       font-weight: 600;
       color: #cbd5e1;
+      transition: all 0.3s ease;
 
       .chip-icon {
         color: #f59e0b;
         font-size: 16px;
       }
+    }
+  }
+}
+
+/* Light Mode Theme Overrides */
+[data-theme="light"] .hero-slide,
+.home-page.light-mode .hero-slide {
+  color: #0f172a;
+
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0.85) 0%, rgba(241, 245, 249, 0.96) 100%);
+  }
+
+  .hero-title {
+    color: #0f172a;
+  }
+
+  .hero-subtitle {
+    color: #475569;
+  }
+
+  .hero-search-bar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      border-color: rgba(255, 56, 92, 0.5);
+    }
+
+    .search-field {
+      .field-inputs {
+        label {
+          color: #64748b;
+        }
+
+        input {
+          color: #0f172a;
+          &::placeholder {
+            color: #94a3b8;
+          }
+        }
+      }
+    }
+
+    .divider {
+      background: #e2e8f0;
+    }
+  }
+
+  .hero-chips {
+    .chip-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
   }
 }

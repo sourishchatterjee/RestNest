@@ -3,14 +3,15 @@ import Navbar from "../components/Navbar";
 import { categories, types, facilities } from "../data";
 
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
-import variables from "../styles/variables.scss";
+import variables from "../styles/variables.js";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { IoIosImages } from "react-icons/io";
 import { useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 
 const CreateListing = () => {
@@ -94,17 +95,59 @@ const CreateListing = () => {
     });
   };
 
-  const creatorId = useSelector((state) => state.user._id);
+  const user = useSelector((state) => state.user);
+  const creatorId = user?._id;
 
   const navigate = useNavigate();
-
-  //console.log(amenities)
 
   const handlePost = async (e) => {
     e.preventDefault();
 
+    if (!creatorId) {
+      toast.error("Please log in to publish a property.");
+      navigate("/login");
+      return;
+    }
+
+    if (!category) {
+      toast.error("Please choose a category for your property (Step 1).");
+      return;
+    }
+
+    if (!type) {
+      toast.error("Please select the type of place (Step 1).");
+      return;
+    }
+
+    if (!formLocation.streetAddress.trim() || !formLocation.city.trim() || !formLocation.country.trim()) {
+      toast.error("Please fill in the street address, city, and country.");
+      return;
+    }
+
+    if (photos.length === 0) {
+      toast.error("Please upload at least 1 photo of your property (Step 2).");
+      return;
+    }
+
+    if (!formDescription.title.trim()) {
+      toast.error("Please enter a title for your listing.");
+      return;
+    }
+
+    if (!formDescription.description.trim()) {
+      toast.error("Please enter a description for your listing.");
+      return;
+    }
+
+    if (!formDescription.price || Number(formDescription.price) <= 0) {
+      toast.error("Please enter a valid price per night.");
+      return;
+    }
+
+    const toastId = toast.loading("Publishing your listing...");
+
     try {
-      /* Create a new FormData onject to handle file uploads */
+      /* Create a new FormData object to handle file uploads */
       const listingForm = new FormData();
       listingForm.append("creator", creatorId);
       listingForm.append("category", category);
@@ -137,10 +180,15 @@ const CreateListing = () => {
       });
 
       if (response.ok) {
+        toast.success("Listing published successfully! 🎉", { id: toastId });
         navigate("/");
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData.message || "Failed to publish listing. Please try again.", { id: toastId });
       }
     } catch (err) {
       console.log("Publish Listing failed", err.message);
+      toast.error("Unable to connect to the server. Please try again later.", { id: toastId });
     }
   };
   return (

@@ -9,7 +9,8 @@ import { DateRange } from "react-date-range";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -65,31 +66,49 @@ const ListingDetails = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async () => {
+    if (!customerId) {
+      toast.error("Please log in to book this property.");
+      navigate("/login");
+      return;
+    }
+
+    if (dayCount < 1) {
+      toast.error("Please select a valid stay date range (minimum 1 night).");
+      return;
+    }
+
+    const toastId = toast.loading("Processing your reservation...");
+
     try {
       const bookingForm = {
         customerId,
         listingId,
-        hostId: listing.creator._id,
+        hostId: listing.creator?._id || listing.creator,
         startDate: dateRange[0].startDate.toDateString(),
         endDate: dateRange[0].endDate.toDateString(),
         totalPrice: listing.price * dayCount,
-      }
+      };
 
       const response = await fetch("http://localhost:3001/bookings/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(bookingForm)
-      })
+        body: JSON.stringify(bookingForm),
+      });
 
       if (response.ok) {
-        navigate(`/${customerId}/trips`)
+        toast.success("Reservation confirmed! Enjoy your stay! 🎉", { id: toastId });
+        navigate(`/${customerId}/trips`);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData.message || "Failed to create booking. Please try again.", { id: toastId });
       }
     } catch (err) {
-      console.log("Submit Booking Failed.", err.message)
+      console.log("Submit Booking Failed.", err.message);
+      toast.error("Unable to connect to the booking server. Please try again.", { id: toastId });
     }
-  }
+  };
 
   return loading ? (
     <Loader />
@@ -104,10 +123,15 @@ const ListingDetails = () => {
         </div>
 
         <div className="photos">
-          {listing.listingPhotoPaths?.map((item) => (
+          {listing.listingPhotoPaths?.map((item, index) => (
             <img
-              src={`http://localhost:3001/${item.replace("public", "")}`}
+              key={index}
+              src={item.startsWith("http") ? item : `http://localhost:3001/${item.replace("public", "")}`}
               alt="listing photo"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=80";
+              }}
             />
           ))}
         </div>
@@ -124,13 +148,19 @@ const ListingDetails = () => {
 
         <div className="profile">
           <img
-            src={`http://localhost:3001/${listing.creator.profileImagePath.replace(
-              "public",
-              ""
-            )}`}
+            src={
+              listing.creator?.profileImagePath
+                ? `http://localhost:3001/${listing.creator.profileImagePath.replace("public", "")}`
+                : "/assets/denny.jpeg"
+            }
+            alt="creator profile"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/assets/denny.jpeg";
+            }}
           />
           <h3>
-            Hosted by {listing.creator.firstName} {listing.creator.lastName}
+            Hosted by {listing.creator?.firstName || "Host"} {listing.creator?.lastName || ""}
           </h3>
         </div>
         <hr />
@@ -147,17 +177,23 @@ const ListingDetails = () => {
           <div>
             <h2>What this place offers?</h2>
             <div className="amenities">
-              {listing.amenities[0].split(",").map((item, index) => (
-                <div className="facility" key={index}>
-                  <div className="facility_icon">
-                    {
-                      facilities.find((facility) => facility.name === item)
-                        ?.icon
-                    }
+              {(Array.isArray(listing.amenities) && listing.amenities.length > 0
+                ? (typeof listing.amenities[0] === "string" ? listing.amenities[0].split(",") : listing.amenities)
+                : []
+              ).map((item, index) => {
+                const trimmed = typeof item === "string" ? item.trim() : item;
+                return (
+                  <div className="facility" key={index}>
+                    <div className="facility_icon">
+                      {
+                        facilities.find((facility) => facility.name.trim().toLowerCase() === trimmed.toLowerCase())
+                          ?.icon
+                      }
+                    </div>
+                    <p>{trimmed}</p>
                   </div>
-                  <p>{item}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

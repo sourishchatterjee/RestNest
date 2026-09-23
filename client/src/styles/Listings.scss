@@ -101,3 +101,35 @@
     margin: 0 auto;
   }
 }
+
+/* Light Mode Overrides */
+[data-theme="light"] .category-list .category,
+.home-page.light-mode .category-list .category {
+  color: #64748b;
+
+  &:hover {
+    color: #0f172a;
+  }
+
+  &.selected {
+    color: #ff385c;
+    border-bottom-color: #ff385c;
+    .category_icon {
+      color: #ff385c;
+    }
+  }
+}
+
+[data-theme="light"] .empty-listings,
+.home-page.light-mode .empty-listings {
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+
+  h3 {
+    color: #0f172a;
+  }
+
+  p {
+    color: #64748b;
+  }
+}

@@ -3,7 +3,17 @@
 
 .create-listing {
   background-color: $lightgrey;
+  color: #1e293b;
   padding: 40px 60px 120px;
+
+  input, textarea, select {
+    color: #1e293b;
+    background-color: #ffffff;
+  }
+
+  p, span, h4 {
+    color: #1e293b;
+  }
 
   @include mm {
     padding: 40px 20px;

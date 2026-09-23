@@ -173,3 +173,69 @@
     }
   }
 }
+
+/* Light Mode Overrides */
+[data-theme="light"] .why-restnest,
+.home-page.light-mode .why-restnest {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #0f172a;
+
+  &::before {
+    background: radial-gradient(circle, rgba(255, 56, 92, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  .why-header {
+    h2 {
+      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: #64748b;
+    }
+  }
+
+  .feature-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+
+    &:hover {
+      background: #ffffff;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 20px rgba(255, 56, 92, 0.1);
+      border-color: rgba(255, 56, 92, 0.5);
+    }
+
+    .card-top {
+      .tag-badge {
+        background: #f1f5f9;
+        color: #64748b;
+      }
+    }
+
+    h3 {
+      color: #0f172a;
+    }
+
+    p {
+      color: #64748b;
+    }
+  }
+
+  .stat-banner {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+    .stat-box {
+      span {
+        color: #64748b;
+      }
+    }
+
+    .stat-divider {
+      background: #e2e8f0;
+    }
+  }
+}

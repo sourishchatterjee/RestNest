@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setWishList } from "../redux/state";
+import toast from "react-hot-toast";
 
 const ListingCard = ({
   listingId,
@@ -52,8 +53,14 @@ const ListingCard = ({
 
   const patchWishList = async (e) => {
     e.stopPropagation();
-    if (!user) return;
-    if (creator && user?._id === creator._id) return;
+    if (!user) {
+      toast.error("Please log in to save to your wish list.");
+      return;
+    }
+    if (creator && (user?._id === (creator?._id || creator))) {
+      toast.error("You cannot add your own property to your wish list.");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -68,9 +75,15 @@ const ListingCard = ({
       const data = await response.json();
       if (data.wishList) {
         dispatch(setWishList(data.wishList));
+        if (isLiked) {
+          toast("Removed from wish list.", { icon: "💔" });
+        } else {
+          toast.success("Saved to your wish list! ❤️");
+        }
       }
     } catch (err) {
       console.error("Failed to patch wishlist:", err);
+      toast.error("Failed to update wish list.");
     }
   };
 

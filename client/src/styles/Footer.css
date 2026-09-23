@@ -214,3 +214,56 @@
   color: #ff385c !important;
   font-weight: 600;
 }
+
+/* Light Mode Overrides */
+[data-theme="light"] .modern-footer,
+.home-page.light-mode .modern-footer {
+  background: #f1f5f9;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+
+  .footer-column h4 {
+    color: #0f172a;
+  }
+
+  .footer-column ul a {
+    color: #64748b;
+    &:hover {
+      color: #ff385c;
+    }
+  }
+
+  .newsletter-box {
+    span {
+      color: #0f172a;
+    }
+  }
+
+  .newsletter-form {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+
+    input {
+      color: #0f172a;
+      &::placeholder {
+        color: #94a3b8;
+      }
+    }
+  }
+
+  .info-row {
+    color: #475569;
+  }
+
+  .footer-bottom-bar {
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+  }
+
+  .footer-bottom-links a {
+    color: #64748b;
+    &:hover {
+      color: #ff385c;
+    }
+  }
+}

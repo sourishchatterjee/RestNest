@@ -120,6 +120,25 @@
     .date-range-calendar {
       margin: 30px 0;
 
+      .rdrCalendarWrapper, .rdrDateRangeWrapper {
+        color: #1e293b;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .rdrDayNumber span {
+        color: #1e293b;
+      }
+
+      .rdrDayDisabled .rdrDayNumber span {
+        color: #a8a29e;
+      }
+
+      .rdrMonthAndYearPickers select {
+        color: #1e293b;
+      }
+
       h2 {
         margin-bottom: 10px;
       }
